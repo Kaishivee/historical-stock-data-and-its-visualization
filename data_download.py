@@ -1,3 +1,4 @@
+import pandas as pd
 import yfinance as yf
 
 
@@ -43,3 +44,10 @@ def notify_if_strong_fluctuations(data, threshold):
         print(f"Цена акций колебалась более чем на {threshold}% за период. Максимальная цена: {max_price:.2f}, Минимальная цена: {min_price:.2f}")
     else:
         print(f"Цена акций колебалась менее чем на {threshold}% за период. Максимальная цена: {max_price:.2f}, Минимальная цена: {min_price:.2f}")
+
+
+def export_data_to_csv(data, filename='stock_data.csv'):
+    """
+    Экспортирует данные в CSV-файл.
+    """
+    data.to_csv(filename)

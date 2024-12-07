@@ -24,8 +24,12 @@ def main():
     # Plot the data
     dplt.create_and_save_plot(stock_data, ticker, period)
 
+    # Export data to CSV
+    dd.export_data_to_csv(stock_data)
+
     # Notify if strong fluctuations in price
     dd.notify_if_strong_fluctuations(stock_data, 10)
+
 
 
 if __name__ == "__main__":
