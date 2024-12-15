@@ -1,5 +1,6 @@
 import pandas as pd
 import yfinance as yf
+import ta
 
 
 def fetch_stock_data(ticker, period='1mo'):
@@ -44,6 +45,24 @@ def notify_if_strong_fluctuations(data, threshold):
         print(f"Цена акций колебалась более чем на {threshold}% за период. Максимальная цена: {max_price:.2f}, Минимальная цена: {min_price:.2f}")
     else:
         print(f"Цена акций колебалась менее чем на {threshold}% за период. Максимальная цена: {max_price:.2f}, Минимальная цена: {min_price:.2f}")
+
+
+def add_rsi(data, window=14):
+    """
+    Добавляет в DataFrame колонку с индикатором RSI.
+    """
+    data['RSI'] = ta.momentum.RSIIndicator(data['Close'], window=window).rsi()
+    return data
+
+
+def add_macd(data):
+    """
+    Добавляет в DataFrame колонки с индикатором MACD.
+    """
+    macd = ta.trend.MACD(data['Close'])
+    data['MACD'] = macd.macd()
+    data['MACD_Signal'] = macd.macd_signal()
+    return data
 
 
 def export_data_to_csv(data, filename='stock_data.csv'):
